@@ -25,20 +25,9 @@ find_library(QGLVIEWER_LIBRARY
 #             PATH_SUFFIXES QGLViewer QGLViewer/release
             )
 
-if(QGLVIEWER_INCLUDE_DIR)
-  message("Found include")
-endif()
-
 if(QGLVIEWER_LIBRARY)
   message("Found Library")
-#  if(QGLVIEWER_LIBRARY_DEBUG)
-#    set(QGLVIEWER_LIBRARIES_ optimized ${QGLVIEWER_LIBRARY_RELEASE} debug ${QGLVIEWER_LIBRARY_DEBUG})
-#  else()
-    set(QGLVIEWER_LIBRARIES_ ${QGLVIEWER_LIBRARY})
-#  endif()
-
-  set(QGLVIEWER_LIBRARIES ${QGLVIEWER_LIBRARIES_} CACHE FILEPATH "The QGLViewer library")
-
+  set(QGLVIEWER_LIBRARIES ${QGLVIEWER_LIBRARY} CACHE FILEPATH "The QGLViewer library")
 endif()
 
 IF(QGLVIEWER_INCLUDE_DIR AND QGLVIEWER_LIBRARIES)
