@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     dataset = 0;
     ui->setupUi(this);
     ui->mainLayout->addWidget(&viewer);
-
+    openFile("testfile.xyzw");
 }
 
 MainWindow::~MainWindow()
@@ -45,14 +45,7 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionOpen_triggered()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), NULL, tr("XYZ File (*.xyz);;XYZW File (*.xyzw)"));
-    if (filename == NULL)
-        return;
-
-    if (dataset != NULL)
-        delete dataset;
-    dataset = new Dataset(filename);
-    viewer.dataset = dataset;
-    updateUi();
+    openFile(filename);
 }
 
 void MainWindow::updateUi() {
@@ -76,4 +69,14 @@ void MainWindow::on_frame_editingFinished()
     viewer.frame = f;
 }
 
+void MainWindow::openFile(QString filename) {
+    if (filename == NULL)
+        return;
+
+    if (dataset != NULL)
+        delete dataset;
+    dataset = new Dataset(filename);
+    viewer.dataset = dataset;
+    updateUi();
+}
 

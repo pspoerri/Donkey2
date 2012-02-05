@@ -37,7 +37,7 @@ public:
         this->w = w;
     }
 
-    void draw(float3 l1, float3 l2, float maxW);
+    void draw(float maxW);
 };
 
 #endif // PARTICLE_H

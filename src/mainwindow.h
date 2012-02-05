@@ -45,6 +45,7 @@ private slots:
 
 private:
 
+    void openFile(QString filename);
     void updateUi();
 
     Ui::MainWindow *ui;

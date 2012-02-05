@@ -51,9 +51,9 @@ void Timestep::updateBounds() {
     radius = radius/2.0f;
 }
 
-void Timestep::draw(float3 l1, float3 l2) {
+void Timestep::draw() {
     for (size_t i=0; i<particles.size(); i++) {
-        particles[i].draw(l1, l2, maxW);
+        particles[i].draw(maxW);
     }
 
 }

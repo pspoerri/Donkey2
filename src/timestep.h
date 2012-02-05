@@ -48,7 +48,7 @@ public:
     }
 
     void put(float x, float y, float z, float w);
-    void draw(float3 l1, float3 l2);
+    void draw();
     void updateBounds();
 
 };

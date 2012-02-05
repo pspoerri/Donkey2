@@ -18,7 +18,7 @@ find_package(QGLViewer)
 
 #### Only require GLUT but not necessarily Xmu
 #if(NOT GLUT_FOUND)
-#message(FATAL_ERROR "Could not find GLEW.")
+#    message(FATAL_ERROR "Could not find GLEW.")
 #endif(NOT GLUT_FOUND)
 
 if(NOT QGLVIEWER_FOUND)
@@ -30,7 +30,7 @@ find_package(QGLViewer)
 include_directories(${CMAKE_SOURCE_DIR}/src 
     ${CMAKE_CURRENT_BINARY_DIR}
     ${QT_INCLUDES} 
-#    ${GLEW_INCLUDE_DIR} 
+    ${GLEW_INCLUDE_DIR}
     ${OPENGL_INCLUDE_DIR}
     ${QGLVIEWER_INCLUDE_DIR})
 
@@ -62,6 +62,8 @@ set_source_files_properties(${Donkey2_SOURCES} PROPERTIES LANGUAGE CXX)
 target_link_libraries(Donkey2 
     ${QT_LIBRARIES}
     ${QGLVIEWER_LIBRARIES} 
+   # ${GLUT_LIBRARY}
+   # ${GLEW_LIBRARY}
     ${OPENGL_LIBRARIES})
 
 

@@ -38,12 +38,16 @@ public:
     }
 
 
+//    static
+//    { 0.0f, 0.0f, 0.01f };
 
 protected:
     virtual void init();
     virtual void draw();
     virtual void animate();
     virtual QString helpString() const;
+
+
 };
 
 #endif // VIEWER_H

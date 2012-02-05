@@ -14,14 +14,35 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#define GL_GLEXT_PROTOTYPES
+
+
+
+//#include <GL/glew.h>
 #include "viewer.h"
+//#include <GL/glut.h>
+
+//#include <GL/gl.h>
+//#include <GL/glx.h>
+//#include <GL/glu.h>
+
+#include <GL/glext.h>
 
 using namespace std;
 using namespace qglviewer;
 
 
 void Viewer::init() {
-    glDisable(GL_CULL_FACE);
+//    if (!glutExtensionSupported("GL_ARB_point_sprite")) {
+//        qDebug() << "GL_ARB_point_sprite required....";
+//        exit(EXIT_FAILURE);
+//    }
+//    if (!glutExtensionSupported("GL_ARB_point_parameters")) {
+//        qDebug() << "GL_ARB_point_parameters required....";
+//        exit(EXIT_FAILURE);
+//    }
+
+//    glDisable(GL_CULL_FACE);
     glShadeModel(GL_SMOOTH);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClearDepth(1.0f);
@@ -31,7 +52,21 @@ void Viewer::init() {
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
 
-    glEnable(GL_TEXTURE_2D);
+//    glShadeModel(GL_SMOOTH);
+//    glEnable(GL_BLEND);
+//    glEnable(GL_DEPTH_TEST);
+//    glEnable(GL_POINT_SMOOTH);
+//    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+//    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+//    glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+
+    glPointSize(256.0);
+
+    float quadratic[3]  = { 0.1, 0.1, 0.1 };
+    float linear[3]  = { 0.0, 1, 0.0 };
+    float constant[3]  = { 0.01, 0.0, 0.0 };
+
+    glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, linear);
 
     QImage b("particle.bmp");
 
@@ -42,9 +77,8 @@ void Viewer::init() {
     glTexImage2D(GL_TEXTURE_2D, 0, 3, t.width(), t.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, t.bits());
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexEnvf(GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, GL_TRUE);
 
-
-    glEnable(GL_TEXTURE_2D);
 
     setCamera(&cam);
     startAnimation();
@@ -52,36 +86,21 @@ void Viewer::init() {
 
 void Viewer::draw() {
     if (dataset == NULL) {
-//        drawSpiral();
         return;
     }
+    glDepthMask(GL_TRUE);
+    glEnable(GL_BLEND);
+    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_POINT_SPRITE_ARB);
+    glColor4f(1.0f, 1.0f, 0.0f, 0.7f);
 
-//    glBegin(GL_POINTS);
-    glPushMatrix();
+    glBegin(GL_POINTS);
+    dataset->timesteps[frame].draw();
+    glEnd();
+    glDisable(GL_POINT_SPRITE_ARB);
+    glDisable(GL_TEXTURE_2D);
+    glDisable(GL_BLEND);
 
-
-    float modelview[16];
-    float3 right;
-    float3 up;
-    glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
-
-    right.x = modelview[0];
-    right.y = modelview[4];
-    right.z = modelview[8];
-
-    up.x = modelview[1];
-    up.y = modelview[5];
-    up.z = modelview[9];
-
-    float3 l1 = {right.x + up.x,
-                 right.y + up.y,
-                 right.z + up.z};
-    float3 l2 = {right.x - up.x,
-                 right.y - up.y,
-                 right.z - up.z};
-    dataset->timesteps[frame].draw(l1, l2);
-//    glEnd();
-    glPopMatrix();
 }
 
 void Viewer::animate() {
