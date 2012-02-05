@@ -50,8 +50,9 @@ void Dataset::readFile() {
       }
       if (!file.atEnd())
         line = file.readLine(); // Ignore this line
-      if (!file.atEnd())
-        line = file.readLine(); // Ignore this line
+      if (xyzw)
+        if (!file.atEnd())
+            line = file.readLine(); // Ignore this line
       timesteps.push_back(Timestep());
       frames++;
       for (int i=0;i<elements_timestep;i++) {
@@ -62,9 +63,9 @@ void Dataset::readFile() {
             exit(EXIT_FAILURE);
           }
           if (xyzw)
-              timesteps.back().put(x,y,z,w);
+              timesteps.back().put( x, y, z, w);
           else
-              timesteps.back().put(y,z,w,1); // the line has the format: 1, x, y, z
+              timesteps.back().put( y, z, w, 1.0f); // the line has the format: 1, x, y, z
         } else {
           qDebug() << "File has wrong format...";
         }
