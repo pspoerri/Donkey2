@@ -41,6 +41,14 @@ void Viewer::init() {
 //        qDebug() << "GL_ARB_point_parameters required....";
 //        exit(EXIT_FAILURE);
 //    }
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glAccum(GL_RETURN, 0.95f);
+
+    // Clear the accumulation buffer (don't worry, we re-grab the screen into the accumulation buffer after drawing our current frame!)
+    glClear(GL_ACCUM_BUFFER_BIT);
+    glClearAccum(0.0f, 0.0f, 0.0f, 0.0f);
+
 
     glDisable(GL_CULL_FACE);
     glShadeModel(GL_SMOOTH);
@@ -85,6 +93,11 @@ void Viewer::draw() {
     if (dataset == NULL) {
         return;
     }
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glAccum(GL_RETURN, 0.95f);
+    glClear(GL_ACCUM_BUFFER_BIT);
+
     glDepthMask(GL_FALSE);
     glEnable(GL_BLEND);
     glEnable(GL_TEXTURE_2D);
@@ -97,14 +110,21 @@ void Viewer::draw() {
     glDisable(GL_POINT_SPRITE_ARB);
     glDisable(GL_TEXTURE_2D);
     glDisable(GL_BLEND);
+    glAccum(GL_ACCUM, 0.5f);
+
 
 }
 
 void Viewer::animate() {
     if (dataset != NULL) {
 //        qDebug() << frame << dataset->frames;
-        frame = (frame+1) % (dataset->frames);
 
+        frame = (frame+1) % (dataset->frames);
+        if (frame == 0) {
+            glClear(GL_ACCUM_BUFFER_BIT);
+            glClearAccum(0.0f, 0.0f, 0.0f, 0.0f);
+
+        }
         setSceneRadius(dataset->timesteps[frame].radius);
         Vec vec;
         vec.x = dataset->timesteps[frame].center.x;
