@@ -42,7 +42,7 @@ void Viewer::init() {
 //        exit(EXIT_FAILURE);
 //    }
 
-//    glDisable(GL_CULL_FACE);
+    glDisable(GL_CULL_FACE);
     glShadeModel(GL_SMOOTH);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClearDepth(1.0f);
@@ -52,21 +52,18 @@ void Viewer::init() {
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
 
-//    glShadeModel(GL_SMOOTH);
-//    glEnable(GL_BLEND);
-//    glEnable(GL_DEPTH_TEST);
-//    glEnable(GL_POINT_SMOOTH);
-//    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-//    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-//    glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
 
-    glPointSize(256.0);
 
-    float quadratic[3]  = { 0.1, 0.1, 0.1 };
+    float quadratic[3]  = { 0.0, 0.0, 0.01337f };
     float linear[3]  = { 0.0, 1, 0.0 };
     float constant[3]  = { 0.01, 0.0, 0.0 };
 
-    glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, linear);
+    glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, quadratic);
+    float maxSize = 0.0f;
+    glGetFloatv( GL_POINT_SIZE_MAX_ARB, &maxSize );
+    glPointSize( maxSize );
+    glPointParameterfARB( GL_POINT_SIZE_MAX_ARB, maxSize );
+    glPointParameterfARB( GL_POINT_SIZE_MIN_ARB, 1.0f );
 
     QImage b("particle.bmp");
 
@@ -88,11 +85,11 @@ void Viewer::draw() {
     if (dataset == NULL) {
         return;
     }
-    glDepthMask(GL_TRUE);
+    glDepthMask(GL_FALSE);
     glEnable(GL_BLEND);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_POINT_SPRITE_ARB);
-    glColor4f(1.0f, 1.0f, 0.0f, 0.7f);
+    glColor4f(1.0f, 1.0f, 0.1f, 0.7f);
 
     glBegin(GL_POINTS);
     dataset->timesteps[frame].draw();
