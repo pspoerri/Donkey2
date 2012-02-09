@@ -93,6 +93,7 @@ void Viewer::draw() {
     if (dataset == NULL) {
         return;
     }
+    glDisable(GL_LIGHTING);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glAccum(GL_RETURN, 0.95f);
@@ -112,6 +113,7 @@ void Viewer::draw() {
     glDisable(GL_BLEND);
     glAccum(GL_ACCUM, 0.5f);
 
+    glEnable(GL_LIGHTING);
 
 }
 

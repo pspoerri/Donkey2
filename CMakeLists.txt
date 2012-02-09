@@ -26,7 +26,6 @@ if(NOT QGLVIEWER_FOUND)
 endif(NOT QGLVIEWER_FOUND)
 
 include(${QT_USE_FILE})
-find_package(QGLViewer)
 include_directories(${CMAKE_SOURCE_DIR}/src 
     ${CMAKE_CURRENT_BINARY_DIR}
     ${QT_INCLUDES} 
