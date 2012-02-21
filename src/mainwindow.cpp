@@ -80,3 +80,8 @@ void MainWindow::openFile(QString filename) {
     updateUi();
 }
 
+
+void MainWindow::on_playBtn_clicked()
+{
+    viewer.toggleAnimation();
+}

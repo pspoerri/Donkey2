@@ -43,6 +43,8 @@ private slots:
     void on_frame_editingFinished();
 
 
+    void on_playBtn_clicked();
+
 private:
 
     void openFile(QString filename);

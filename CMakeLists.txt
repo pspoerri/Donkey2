@@ -49,7 +49,8 @@ set(Donkey2_FORMS
    )
 
 file(COPY
-    particle.bmp
+    star.png
+    star128.png
     testfile.xyzw
     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 

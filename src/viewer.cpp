@@ -28,6 +28,8 @@
 
 #include <GL/glext.h>
 
+#include <QCoreApplication>
+
 using namespace std;
 using namespace qglviewer;
 
@@ -62,18 +64,20 @@ void Viewer::init() {
 
 
 
-    float quadratic[3]  = { 0.0, 0.0, 0.01337f };
+    float quadratic[3]  = { 1.0, 0.0, 0.01 };
     float linear[3]  = { 0.0, 1, 0.0 };
     float constant[3]  = { 0.01, 0.0, 0.0 };
 
     glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, quadratic);
-    float maxSize = 0.0f;
-    glGetFloatv( GL_POINT_SIZE_MAX_ARB, &maxSize );
+    float maxSize = 30.0f;
+//    glGetFloatv( GL_POINT_SIZE_MAX_ARB, &maxSize );
     glPointSize( maxSize );
     glPointParameterfARB( GL_POINT_SIZE_MAX_ARB, maxSize );
-    glPointParameterfARB( GL_POINT_SIZE_MIN_ARB, 1.0f );
+    glPointParameterfARB( GL_POINT_SIZE_MIN_ARB, 3.0f );
 
-    QImage b("particle.bmp");
+//    QImage b("particle.bmp");
+    qDebug() << QCoreApplication::applicationDirPath();
+    QImage b(QCoreApplication::applicationDirPath() + "/" + "star128.png");
 
     QImage t;
     t = QGLWidget::convertToGLFormat(b);
