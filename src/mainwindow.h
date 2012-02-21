@@ -47,6 +47,10 @@ private slots:
 
     void on_speedSlider_valueChanged(int value);
 
+    void on_frameSlider_sliderMoved(int position);
+
+    void on_frame_valueChanged(int arg1);
+
 private:
     void openFile(QString filename);
     void updateUi();
@@ -55,6 +59,9 @@ private:
     Viewer viewer;
 
     Dataset *dataset;
+
+    bool frameChanged;
+    bool frameSliderChanged;
 
 };
 

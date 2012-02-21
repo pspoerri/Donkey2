@@ -54,7 +54,7 @@ void Viewer::init() {
 
     glDisable(GL_CULL_FACE);
     glShadeModel(GL_SMOOTH);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+//    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClearDepth(1.0f);
     glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
@@ -128,11 +128,11 @@ void Viewer::animate() {
 //        qDebug() << frame << dataset->frames;
 
         frame = (frame+1) % (dataset->frames);
-        if (frame == 0) {
-            glClear(GL_ACCUM_BUFFER_BIT);
-            glClearAccum(0.0f, 0.0f, 0.0f, 0.0f);
+//        if (frame == 0) {
+//            glClear(GL_ACCUM_BUFFER_BIT);
+//            glClearAccum(0.0f, 0.0f, 0.0f, 0.0f);
 
-        }
+//        }
         setSceneRadius(dataset->timesteps[frame].radius);
         Vec vec;
         vec.x = dataset->timesteps[frame].center.x;
@@ -150,6 +150,15 @@ void Viewer::changeSpeed(int value) {
     setAnimationPeriod(value);
     if (started)
         startAnimation();
+}
+void Viewer::setFrame(int frame) {
+    bool started = animationIsStarted();
+    if (started)
+        stopAnimation();
+    this->frame = frame % (dataset->frames);
+    if (started)
+        startAnimation();
+    updateGL();
 }
 
 QString Viewer::helpString() const

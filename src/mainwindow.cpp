@@ -23,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    frameChanged = false;
+    frameSliderChanged = false;
+
     dataset = 0;
     ui->setupUi(this);
     ui->mainLayout->addWidget(&viewer);
@@ -77,6 +80,8 @@ void MainWindow::openFile(QString filename) {
         delete dataset;
     dataset = new Dataset(filename);
     viewer.dataset = dataset;
+    viewer.updateGL();
+    ui->frameSlider->setMaximum(viewer.dataset->frames);
     updateUi();
 }
 
@@ -92,4 +97,25 @@ void MainWindow::on_speedSlider_valueChanged(int value)
     qDebug() << "Speed value changed: "+QString::number(value);
 //    viewer.speed = value;
     viewer.changeSpeed(value);
+}
+
+void MainWindow::on_frameSlider_sliderMoved(int position)
+{
+    if (frameChanged)
+        return;
+    viewer.setFrame(position);
+    frameSliderChanged = true;
+    ui->frame->setValue(position);
+    frameSliderChanged = false;
+}
+
+void MainWindow::on_frame_valueChanged(int value)
+{
+    if (frameSliderChanged)
+        return;
+    viewer.setFrame(value);
+    frameChanged = true;
+    ui->frameSlider->setValue(value);
+    frameChanged = false;
+
 }
