@@ -45,6 +45,8 @@ private slots:
 
     void on_playBtn_clicked();
 
+    void on_speedSlider_valueChanged(int value);
+
 private:
 
     void openFile(QString filename);

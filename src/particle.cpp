@@ -17,8 +17,13 @@
 #include "particle.h"
 
 #include <QGLViewer/qglviewer.h>
-
+#include <math.h>
 void Particle::draw(float maxW) {
 //    glColor4f(w/maxW, w/maxW, 1.0f, 1.0f);
+    float k = w/maxW;
+    float d = k;
+    if (maxW - 1.0f < 0.001)
+        d = 0.0;
+    glColor4f(1.0, k, d, 0.3+log(1.0+k)/2.0);
     glVertex3f(x, y, z);
 }

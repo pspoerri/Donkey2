@@ -30,13 +30,15 @@ public:
     int frame;
     Dataset *dataset;
     GLuint texture[1];
-    int speed;
+    volatile int speed;
+    int speed_counter;
+    bool viewer_initialized;
     Viewer() {
         dataset = 0;
         frame = 0;
-        speed = 0;
+        viewer_initialized = false;
+        setAnimationPeriod(40);
     }
-
 
 //    static
 //    { 0.0f, 0.0f, 0.01f };

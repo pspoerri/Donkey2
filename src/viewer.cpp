@@ -91,12 +91,14 @@ void Viewer::init() {
 
     setCamera(&cam);
     startAnimation();
+    viewer_initialized = true;
 }
 
 void Viewer::draw() {
     if (dataset == NULL) {
         return;
     }
+
     glDisable(GL_LIGHTING);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -137,6 +139,7 @@ void Viewer::animate() {
         vec.x = dataset->timesteps[frame].center.y;
         vec.x = dataset->timesteps[frame].center.z;
         setSceneCenter(vec);
+        speed_counter = 0;
     }
 }
 
