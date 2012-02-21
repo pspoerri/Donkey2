@@ -54,7 +54,7 @@ void Viewer::init() {
 
     glDisable(GL_CULL_FACE);
     glShadeModel(GL_SMOOTH);
-//    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
     glClearDepth(1.0f);
     glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
@@ -69,7 +69,7 @@ void Viewer::init() {
     float constant[3]  = { 0.01, 0.0, 0.0 };
 
     glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, quadratic);
-    float maxSize = 30.0f;
+    float maxSize = 60.0f;
 //    glGetFloatv( GL_POINT_SIZE_MAX_ARB, &maxSize );
     glPointSize( maxSize );
     glPointParameterfARB( GL_POINT_SIZE_MAX_ARB, maxSize );
