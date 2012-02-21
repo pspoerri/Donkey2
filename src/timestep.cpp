@@ -19,7 +19,7 @@
 
 void Timestep::put(float x, float y, float z, float w) {
     particles.push_back(Particle(x,y,z,w));
-    if (maxW > w)
+    if (maxW < w)
         maxW = w;
 
     if (x>max.x)

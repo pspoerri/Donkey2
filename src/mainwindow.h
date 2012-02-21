@@ -48,7 +48,6 @@ private slots:
     void on_speedSlider_valueChanged(int value);
 
 private:
-
     void openFile(QString filename);
     void updateUi();
 

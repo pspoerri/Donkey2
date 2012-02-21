@@ -88,12 +88,8 @@ void MainWindow::on_playBtn_clicked()
 
 void MainWindow::on_speedSlider_valueChanged(int value)
 {
+
     qDebug() << "Speed value changed: "+QString::number(value);
 //    viewer.speed = value;
-    bool started = viewer.animationIsStarted();
-    if (started)
-        viewer.stopAnimation();
-    viewer.setAnimationPeriod(value);
-    if (started)
-        viewer.startAnimation();
+    viewer.changeSpeed(value);
 }

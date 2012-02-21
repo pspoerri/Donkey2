@@ -33,6 +33,7 @@ public:
     volatile int speed;
     int speed_counter;
     bool viewer_initialized;
+    void changeSpeed(int value);
     Viewer() {
         dataset = 0;
         frame = 0;

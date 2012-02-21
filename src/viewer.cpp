@@ -45,11 +45,11 @@ void Viewer::init() {
 //    }
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glAccum(GL_RETURN, 0.95f);
+//    glAccum(GL_RETURN, 0.95f);
 
     // Clear the accumulation buffer (don't worry, we re-grab the screen into the accumulation buffer after drawing our current frame!)
-    glClear(GL_ACCUM_BUFFER_BIT);
-    glClearAccum(0.0f, 0.0f, 0.0f, 0.0f);
+//    glClear(GL_ACCM_BUFFER_BIT);
+//    glClearAccum(0.0f, 0.0f, 0.0f, 0.0f);
 
 
     glDisable(GL_CULL_FACE);
@@ -102,8 +102,8 @@ void Viewer::draw() {
     glDisable(GL_LIGHTING);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glAccum(GL_RETURN, 0.95f);
-    glClear(GL_ACCUM_BUFFER_BIT);
+//    glAccum(GL_RETURN, 0.95f);
+//    glClear(GL_ACCUM_BUFFER_BIT);
 
     glDepthMask(GL_FALSE);
     glEnable(GL_BLEND);
@@ -117,7 +117,7 @@ void Viewer::draw() {
     glDisable(GL_POINT_SPRITE_ARB);
     glDisable(GL_TEXTURE_2D);
     glDisable(GL_BLEND);
-    glAccum(GL_ACCUM, 0.5f);
+//    glAccum(GL_ACCUM, 0.5f);
 
     glEnable(GL_LIGHTING);
 
@@ -141,6 +141,15 @@ void Viewer::animate() {
         setSceneCenter(vec);
         speed_counter = 0;
     }
+}
+
+void Viewer::changeSpeed(int value) {
+    bool started = animationIsStarted();
+    if (started)
+        stopAnimation();
+    setAnimationPeriod(value);
+    if (started)
+        startAnimation();
 }
 
 QString Viewer::helpString() const
