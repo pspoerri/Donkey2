@@ -1,7 +1,7 @@
 Donkey²
 =======
 
-An XYZ Data viewer that allows the Visualization of XYZ data. The code was written for my bachelor thesis.  
+An XYZ Data viewer optimized for visualization of galaxy data stored in the XYZ data format.  
 
 Why Donkey²? Because it was my second attempt. 
 
