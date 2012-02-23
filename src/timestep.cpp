@@ -16,7 +16,7 @@
 
 
 #include "timestep.h"
-
+#include <QDebug>
 void Timestep::put(float x, float y, float z, float w) {
     particles.push_back(Particle(x,y,z,w));
     if (maxW < w)
@@ -35,6 +35,7 @@ void Timestep::put(float x, float y, float z, float w) {
         min.y = y;
     if (z<min.z)
         min.z = z;
+//    qDebug() << x << y << z << w;
 }
 
 void Timestep::updateBounds() {
@@ -49,6 +50,12 @@ void Timestep::updateBounds() {
         radius = max.z - min.z;
 
     radius = radius/2.0f;
+
+    if (maxW < 1e-7) {
+        qDebug() << "Warning: maxW is "<< maxW << "setting it to 1.0";
+        maxW = 1.0f;
+    }
+
 }
 
 void Timestep::draw() {

@@ -65,7 +65,7 @@ void Dataset::readFile() {
           if (xyzw)
               timesteps.back().put( x, y, z, w);
           else
-              timesteps.back().put( y, z, w, 1.0f); // the line has the format: 1, x, y, z
+              timesteps.back().put( y, z, w, x); // the line has the format: 1, x, y, z
         } else {
           qDebug() << "File has wrong format...";
         }
@@ -73,5 +73,6 @@ void Dataset::readFile() {
       }
       timesteps.back().updateBounds();
     }
+
 
 }
