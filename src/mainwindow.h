@@ -20,7 +20,7 @@
 #include <QMainWindow>
 #include "viewer.h"
 #include "dataset.h"
-
+#include <QTimer>
 namespace Ui {
     class MainWindow;
 }
@@ -53,6 +53,8 @@ private slots:
 
     void on_frame_valueChanged(int arg1);
 
+    void on_openFileBtn_clicked();
+
 private:
     void openFile(QString filename);
     void updateUi();
@@ -66,7 +68,7 @@ private:
     bool fullscreen;
     bool frameChanged;
     bool frameSliderChanged;
-
+    QTimer *timer;
 };
 
 #endif // MAINWINDOW_H

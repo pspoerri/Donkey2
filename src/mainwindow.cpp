@@ -19,7 +19,7 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QTimer>
-
+#include <QCoreApplication>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -31,10 +31,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->mainLayout->addWidget(&viewer);
 
-    QTimer *t = new QTimer( this );
-    connect(t, SIGNAL ( timeout() ), this, SLOT( updateUiSlot() ));
-    t->start();
-    openFile("testfile.xyzw");
+    timer = new QTimer( this );
+    connect(timer, SIGNAL ( timeout() ), this, SLOT( updateUiSlot() ));
+    timer->start();
+
+//    openFile(QCoreApplication::applicationDirPath() + "/" +"testfile.xyzw");
 }
 
 MainWindow::~MainWindow()
@@ -49,11 +50,13 @@ void MainWindow::on_actionExit_triggered()
     this->window()->close();
     exit(EXIT_SUCCESS);
 }
-
+bool bla = false;
 void MainWindow::on_actionOpen_triggered()
 {
+    timer->stop();
     QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), NULL, tr("XYZ File (*.xyz);;XYZW File (*.xyzw)"));
     openFile(filename);
+    timer->start();
 }
 
 void MainWindow::updateUi() {
@@ -98,7 +101,7 @@ void MainWindow::openFile(QString filename) {
     dataset = new Dataset(filename);
     viewer.dataset = dataset;
     viewer.updateGL();
-    ui->frameSlider->setMaximum(viewer.dataset->frames);
+    ui->frameSlider->setMaximum(viewer.dataset->frames-1);
     resetUi();
 }
 
@@ -160,4 +163,9 @@ void MainWindow::toggleFullscreen() {
 
 void MainWindow::updateUiSlot() {
     updateUi();
+}
+
+void MainWindow::on_openFileBtn_clicked()
+{
+    on_actionOpen_triggered();
 }
