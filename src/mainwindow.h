@@ -33,6 +33,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void updateUiSlot();
 private slots:
     void on_actionExit_triggered();
 
@@ -54,12 +56,14 @@ private slots:
 private:
     void openFile(QString filename);
     void updateUi();
-
+    void resetUi();
+    void toggleFullscreen();
     Ui::MainWindow *ui;
     Viewer viewer;
 
     Dataset *dataset;
 
+    bool fullscreen;
     bool frameChanged;
     bool frameSliderChanged;
 

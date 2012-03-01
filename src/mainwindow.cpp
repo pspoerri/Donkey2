@@ -18,6 +18,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
+#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,10 +26,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     frameChanged = false;
     frameSliderChanged = false;
-
+    fullscreen = false;
     dataset = 0;
     ui->setupUi(this);
     ui->mainLayout->addWidget(&viewer);
+
+    QTimer *t = new QTimer( this );
+    connect(t, SIGNAL ( timeout() ), this, SLOT( updateUiSlot() ));
+    t->start();
     openFile("testfile.xyzw");
 }
 
@@ -53,13 +58,25 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::updateUi() {
     if (dataset != NULL) {
-        ui->frameSlider->setMaximum(dataset->frames);
+//        ui->frameSlider->setMaximum(dataset->frames);
+//        ui->frameSlider->setValue(0);
+        ui->frame->setValue(viewer.frame);
+
+//        ui->speedSlider->setValue(1);
+        toggleFullscreen();
+    }
+}
+void MainWindow::resetUi() {
+    if (dataset != NULL) {
+        ui->frameSlider->setMaximum(dataset->frames-1);
         ui->frameSlider->setValue(0);
         ui->frame->setValue(0);
 
         ui->speedSlider->setValue(1);
+        updateUi();
     }
 }
+
 
 void MainWindow::on_actionHelp_triggered()
 {
@@ -82,7 +99,7 @@ void MainWindow::openFile(QString filename) {
     viewer.dataset = dataset;
     viewer.updateGL();
     ui->frameSlider->setMaximum(viewer.dataset->frames);
-    updateUi();
+    resetUi();
 }
 
 
@@ -118,4 +135,29 @@ void MainWindow::on_frame_valueChanged(int value)
     ui->frameSlider->setValue(value);
     frameChanged = false;
 
+}
+
+void MainWindow::toggleFullscreen() {
+    if (this->isFullScreen() || viewer.isFullScreen()) {
+        if (!fullscreen) {
+            qDebug() << "Toggling Fullscreen";
+            fullscreen = true;
+//            ui->sidePanel->hide();
+            ui->statusBar->setVisible(false);
+            ui->menuBar->setVisible(false);
+//            viewer.showFullScreen();
+        }
+    } else {
+        if (fullscreen) {
+            fullscreen = false;
+//            ui->sidePanel->setVisible(true);
+            ui->statusBar->setVisible(true);
+            ui->menuBar->setVisible(true);
+//            viewer.showFullScreen();
+        }
+    }
+}
+
+void MainWindow::updateUiSlot() {
+    updateUi();
 }
