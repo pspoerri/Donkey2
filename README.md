@@ -15,7 +15,7 @@ Requirements
 Screenshot
 ----------
 
-![Donkey² Screenshot](https://github.com/moeeeep/Donkey2/raw/master/materials/screenshot.png)
+![Donkey² Screenshot](https://github.com/minusinf/Donkey2/blob/master/materials/screenshot.png?raw=true)
 
 
 
